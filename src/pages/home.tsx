@@ -1,25 +1,46 @@
-import { useState } from "react"
-import { Button } from "../components/ui/button"
+import { Can } from "@/components/Can";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Game } from "@/types/game";
+import { useQuery } from "@tanstack/react-query";
+import { getAllActiveGames } from "@/api/games";
 
 export function Home() {
-  const [message, setMessage] = useState("")
+  const handleFetchGames = async () => {
+    try {
+      const games = await getAllActiveGames();
+      return games.data.allGamesList;
+    } catch (error) {
+      throw new Error("Failed to fetch games");
+    }
+  };
 
-  const handleWelcome = () => {
-    setMessage("Why did you?")
-  }
-  const handleCleanState = () => {
-    setMessage("")
-  }
+  const { data: games, isLoading } = useQuery<Game[]>({
+    queryKey: ["games"],
+    queryFn: handleFetchGames
+  });
 
   return (
-    <div className="flex flex-col justify-center items-center gap-10 h-screen">
-      <h1 className="text-2xl">Welcome!</h1>
-      {message && <p>{message}</p>}
-      {!message ? (
-        <Button onClick={handleWelcome}>Do not click me</Button>
-      ) : (
-        <Button onClick={handleCleanState}>Undo the damage</Button>
-      )}
+    <div className="p-2">
+      <div className="grid grid-cols-3 gap-10">
+        {isLoading && <p>Loading...</p>}
+        {games?.map((game) => (
+          <Card key={game.id}>
+            <CardHeader>
+              <CardTitle>{game.name}</CardTitle>
+              <CardDescription>{game.description}</CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Can
+                permission="ORDER:ADD_GAME"
+                permissionType="actions"
+                yes={() => <Button>Add To Cart</Button>}
+                no={() => <p>Sign in to access your shopping cart</p>}
+              />
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
