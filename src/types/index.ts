@@ -1,4 +1,4 @@
-enum GlobalResponseStatus {
+export enum GlobalResponseStatus {
   SUCCESS = "SUCCESS",
   ERROR = "ERROR"
 }

@@ -1,9 +1,9 @@
-enum UserRole {
+export enum UserRole {
   ADMIN = "ADMIN",
   USER = "USER"
 }
 
-enum UserStatus {
+export enum UserStatus {
   ACTIVE = "ACTIVE",
   UNVERIFIED = "UNVERIFIED",
   NOT_ACTIVE = "NOT_ACTIVE"

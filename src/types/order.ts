@@ -1,14 +1,14 @@
 import { Game } from "./game";
 import { User } from "./user";
 
-enum OrderStatus {
+export enum OrderStatus {
   PROCESSING = "PROCESSING",
   APPROVED = "APPROVED",
   DELIVERED = "DELIVERED",
   DECLINED = "DECLINED"
 }
 
-enum PaymentStatus {
+export enum PaymentStatus {
   WAITING = "WAITING",
   PAID = "PAID",
   UNPAID = "UNPAID"
