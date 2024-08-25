@@ -79,3 +79,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .bg-gradient {
+    background-image: var(--gradient);
+  }
+}

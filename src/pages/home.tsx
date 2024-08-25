@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllActiveGames } from "@/api/games";
 import { GlobalResponse, GlobalResponseStatus } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { Header } from "@/components/navigation/Header";
 
 export function Home() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export function Home() {
 
   return (
     <div className="p-2">
+      <Header></Header>
       <div className="grid grid-cols-3 gap-10">
         {isLoading && <p>Loading...</p>}
         {games?.map((game) => (
