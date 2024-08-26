@@ -70,10 +70,10 @@ const ActionsButtons = () => {
 
       <div>
         <div className="hidden md:flex md:space-x-4">
-          <Button className="text-md" variant="secondary">
+          <Button className="text-md" variant="secondary" onClick={handleNavigationRegister}>
             SignUp
           </Button>
-          <Button className="text-md" variant="secondary">
+          <Button className="text-md" variant="secondary" onClick={handleNavigationLogin}>
             Login
           </Button>
           <Button className="text-md" variant="secondary">
