@@ -112,11 +112,7 @@ const ActionsButtons = () => {
             permission="CART:VIEW"
             permissionType="views"
             yes={() => (
-              <LuShoppingBag
-                color="white"
-                onClick={handleNavigationCart}
-                style={{ width: "40x", height: "40px" }}
-              />
+              <LuShoppingBag className="w-8 h-8" color="white" onClick={handleNavigationCart} />
             )}
           />
           <Can

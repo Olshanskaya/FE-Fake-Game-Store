@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { LuSearch } from "react-icons/lu";
 
 import {
   NavigationMenu,
@@ -12,9 +14,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import { GENRES, PLAYER_SUPPORT } from "@/types/game";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function NavigationBar() {
   const navigate = useNavigate();
+  const [name, setName] = useState<string>("");
 
   const handleNavigationHome = () => {
     navigate(`/`);
@@ -26,6 +30,10 @@ export function NavigationBar() {
 
   const handleNavigationDashboard = () => {
     navigate(`/dashboard`);
+  };
+
+  const selectActiveGamesByName = (name: string) => {
+    console.log(name);
   };
 
   const selectActiveGamesByGenre = (genre: string) => {
@@ -75,6 +83,17 @@ export function NavigationBar() {
               ))}
             </ul>
           </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem className="w-full">
+          <div className="flex w-full max-w-sm items-center space-x-2">
+            <Input
+              type="name"
+              placeholder="search by name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <LuSearch className="w-8 h-8" color="white" onClick={() => selectActiveGamesByName(name)}/>
+          </div>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
