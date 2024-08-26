@@ -58,7 +58,7 @@ const ActionsButtons = () => {
                     Login
                   </Button>
                   <Button variant="link" onClick={handleNavigationRegister}>
-                    Register
+                    SignUp
                   </Button>
                   <Button variant="link">Log Out</Button>
                 </div>
@@ -66,6 +66,20 @@ const ActionsButtons = () => {
             </SheetHeader>
           </SheetContent>
         </Sheet>
+      </div>
+
+      <div>
+        <div className="hidden md:flex md:space-x-4">
+          <Button className="text-md" variant="secondary">
+            SignUp
+          </Button>
+          <Button className="text-md" variant="secondary">
+            Login
+          </Button>
+          <Button className="text-md" variant="secondary">
+            Log Out
+          </Button>
+        </div>
       </div>
     </div>
   );

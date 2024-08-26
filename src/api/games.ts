@@ -30,3 +30,13 @@ export const createOne = async (game: CreateGame) => {
     return Promise.reject(new Error("Something went wrong"));
   }
 };
+
+export const getActiveGamesByGenre = async (game: CreateGame) => {
+  try {
+    const res = await api.post("/games", game);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
