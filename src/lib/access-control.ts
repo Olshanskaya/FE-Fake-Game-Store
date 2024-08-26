@@ -9,8 +9,8 @@ export type RoleControl = {
 
 export type PermissionCategory = keyof RoleControl[Role];
 
-type Page = "HOME" | "CART" | "ME" | "AUTH";
-type Resource = "GAME" | "USER" | "ME" | "ORDER";
+type Page = "HOME" | "CART" | "ME" | "AUTH" | "DASHBOARD";
+type Resource = "GAME" | "USER" | "ME" | "ORDER" | "DASHBOARD";
 type Method =
   | "GET"
   | "ADD"
@@ -20,7 +20,8 @@ type Method =
   | "LOGOUT"
   | "SIGNUP"
   | "ADD_GAME"
-  | "REMOVE_GAME";
+  | "REMOVE_GAME"
+  | "ACCESS";
 
 export type ResourcePermission = `${Resource}:${Method}`;
 export type PagePermission = `${Page}:VIEW`;
@@ -32,7 +33,7 @@ export const RBAC_ROLES: RoleControl = {
   },
   ADMIN: {
     views: ["HOME:VIEW", "CART:VIEW", "ME:VIEW"],
-    actions: ["GAME:GET", "GAME:REMOVE", "GAME:ADD", "GAME:EDIT", "ME:LOGOUT"]
+    actions: ["GAME:GET", "GAME:REMOVE", "GAME:ADD", "GAME:EDIT", "ME:LOGOUT", "DASHBOARD:ACCESS"]
   },
   USER: {
     views: ["HOME:VIEW", "CART:VIEW", "ME:VIEW"],
