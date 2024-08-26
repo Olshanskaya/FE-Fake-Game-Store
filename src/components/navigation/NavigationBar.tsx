@@ -13,12 +13,17 @@ import {
   NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { GENRES, PLAYER_SUPPORT } from "@/types/game";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 export function NavigationBar() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [name, setName] = useState<string>("");
+
+  const search = searchParams.get("search");
+  const genres = searchParams.get("genres");
+  const playerSupports = searchParams.get("playerSupports");
 
   const handleNavigationHome = () => {
     navigate(`/`);
@@ -33,14 +38,18 @@ export function NavigationBar() {
   };
 
   const selectActiveGamesByName = (name: string) => {
+    searchParams.set("search", name);
+    setSearchParams(searchParams);
     console.log(name);
   };
 
   const selectActiveGamesByGenre = (genre: string) => {
+    setSearchParams({genres: genre });
     console.log(genre);
   };
 
   const selectActiveGamesByPlayerSupport = (ps: string) => {
+    setSearchParams({playerSupports: ps });
     console.log(ps);
   };
 
@@ -92,7 +101,11 @@ export function NavigationBar() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <LuSearch className="w-8 h-8" color="white" onClick={() => selectActiveGamesByName(name)}/>
+            <LuSearch
+              className="w-8 h-8"
+              color="white"
+              onClick={() => selectActiveGamesByName(name)}
+            />
           </div>
         </NavigationMenuItem>
       </NavigationMenuList>

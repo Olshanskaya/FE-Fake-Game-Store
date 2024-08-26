@@ -24,9 +24,6 @@ export const PLAYER_SUPPORT: { supportType: string; description: string }[] = [
   { supportType: "SINGLE_PLAYER", description: "Games designed to be played by one person, focusing on solo experiences and narratives." },
 ];
 
-
-
-
 export type Game = {
   id: string;
   name: string;
