@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 
 import { AlignJustify } from "lucide-react";
+import { LuShoppingBag } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
 const ActionsButtons = () => {
@@ -70,6 +71,14 @@ const ActionsButtons = () => {
 
       <div>
         <div className="hidden md:flex md:space-x-4">
+          <Button
+            className="text-black text-lg"
+            onClick={handleNavigationDashboard}
+            variant="secondary"
+          >
+            Dashboard
+          </Button>
+          <LuShoppingBag color="white" onClick={handleNavigationCart} style={{ width: "40x", height: "40px" }}/>
           <Button className="text-md" variant="secondary" onClick={handleNavigationRegister}>
             SignUp
           </Button>

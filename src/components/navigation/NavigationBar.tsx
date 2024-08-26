@@ -1,17 +1,14 @@
 import { cn } from "@/lib/utils";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport
+  NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { GENRES, PLAYER_SUPPORT } from "@/types/game";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +24,10 @@ export function NavigationBar() {
     navigate(`/cart`);
   };
 
+  const handleNavigationDashboard = () => {
+    navigate(`/dashboard`);
+  };
+
   const selectActiveGamesByGenre = (genre: string) => {
     console.log(genre);
   };
@@ -39,7 +40,7 @@ export function NavigationBar() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Button className="text-white font-bold text-lg" onSelect={handleNavigationHome}>
+          <Button className="text-white font-bold text-lg" onClick={handleNavigationHome}>
             ALL GAMES
           </Button>
         </NavigationMenuItem>
