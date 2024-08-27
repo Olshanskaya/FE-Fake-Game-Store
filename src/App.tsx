@@ -5,19 +5,21 @@ import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { Cart } from "./pages/Cart";
 import { Dashboard } from "./pages/Dashboard";
-import { Header } from "./components/navigation/Header";
+import LayoutWithHeader from "./components/LayoutWithHeader";
 
 function App() {
   return (
     <>
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="game/:id" element={<GameDetails />} />
+        <Route element={<LayoutWithHeader />}>
+          <Route path="/" element={<Home />} />
+          <Route path="game/:id" element={<GameDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );
