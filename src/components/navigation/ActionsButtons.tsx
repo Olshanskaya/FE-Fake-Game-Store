@@ -12,8 +12,10 @@ import { AlignJustify } from "lucide-react";
 import { LuShoppingBag } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { Can } from "../Can";
+import { useAuth } from "@/auth/AuthProvider";
 
 const ActionsButtons = () => {
+  const {logOut} = useAuth();
   const navigate = useNavigate();
 
   const handleNavigationHome = () => {
@@ -35,6 +37,12 @@ const ActionsButtons = () => {
   const handleNavigationDashboard = () => {
     navigate(`/dashboard`);
   };
+
+  const handleLogout = () => {
+    logOut();
+    console.log("logout");
+  };
+
   return (
     <div>
       <div className="md:hidden">
@@ -84,7 +92,11 @@ const ActionsButtons = () => {
                   <Can
                     permission="ME:LOGOUT"
                     permissionType="actions"
-                    yes={() => <Button variant="link">Log Out</Button>}
+                    yes={() => (
+                      <Button variant="link" onClick={handleLogout}>
+                        Log Out
+                      </Button>
+                    )}
                   />
                 </div>
               </SheetDescription>
@@ -133,7 +145,7 @@ const ActionsButtons = () => {
             permission="ME:LOGOUT"
             permissionType="actions"
             yes={() => (
-              <Button className="text-md" variant="secondary">
+              <Button className="text-md" variant="secondary" onClick={handleLogout}>
                 Log Out
               </Button>
             )}

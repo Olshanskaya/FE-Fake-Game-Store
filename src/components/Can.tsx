@@ -1,3 +1,4 @@
+import { useAuth } from "@/auth/AuthProvider";
 import {
   Role,
   ResourcePermission,
@@ -58,8 +59,9 @@ type CanProp = {
 };
 
 export const Can = ({ permission, permissionType, yes, no = () => null }: CanProp) => {
-  // change this to be dynamic based on what the token has
-  const USER_ROLE = "ANY";
+  const {user} = useAuth();
+  const USER_ROLE = user?.role || "ANY";
+
 
   return checkPermission(USER_ROLE, permission, permissionType) ? yes() : no();
 };

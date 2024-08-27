@@ -6,21 +6,24 @@ import { Login } from "./pages/Login";
 import { Cart } from "./pages/Cart";
 import { Dashboard } from "./pages/Dashboard";
 import LayoutWithHeader from "./components/LayoutWithHeader";
+import { AuthProvider } from "./auth/AuthProvider";
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route element={<LayoutWithHeader />}>
-          <Route path="/" element={<Home />} />
-          <Route path="game/:id" element={<GameDetails />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
+      <AuthProvider>
+        <Routes>
+          <Route element={<LayoutWithHeader />}>
+            <Route path="/" element={<Home />} />
+            <Route path="game/:id" element={<GameDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
 
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </AuthProvider>
     </>
   );
 }

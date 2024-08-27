@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/auth/AuthProvider";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Enter correct email" }).min(2).max(50),
@@ -24,6 +25,7 @@ const formSchema = z.object({
 
 export function Login() {
   const navigate = useNavigate();
+  const { user, logInUser } = useAuth();
 
   const handleNavigationHome = () => {
     navigate(`/`);
@@ -38,7 +40,8 @@ export function Login() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    logInUser(values.email, values.password);
+    console.log(user);
   }
 
   return (
