@@ -24,26 +24,12 @@ export function Home() {
     queryFn: () => getAllActiveGames(searchParams)
   });
 
-  console.log(games);
-
-  // const handleFetchGames = async () => {
-  //   const response = await getAllActiveGames(searchParams);
-  //   if (response.status === GlobalResponseStatus.ERROR || !response.data) return [];
-  //   return response.data.allGamesList;
-  // };
-
-  // const { data: games, isLoading } = useQuery<Game[]>({
-  //   queryKey: ["games"],
-  //   queryFn: handleFetchGames
-  // });
-
   const handleNavigation = (id: string) => {
     navigate(`/game/${id}`);
   };
 
   return (
     <div className="p-2">
-      <Header></Header>
       <div className="grid grid-cols-3 gap-10">
         {isLoading && <p>Loading...</p>}
         {games?.data?.allGamesList.map((game) => (

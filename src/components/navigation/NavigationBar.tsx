@@ -13,10 +13,11 @@ import {
   NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { GENRES, PLAYER_SUPPORT } from "@/types/game";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 export function NavigationBar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [name, setName] = useState<string>("");
@@ -38,19 +39,20 @@ export function NavigationBar() {
   };
 
   const selectActiveGamesByName = (name: string) => {
-    searchParams.set("search", name);
-    setSearchParams(searchParams);
-    console.log(name);
+    if (location.pathname === "/") {
+      searchParams.set("search", name);
+      setSearchParams(searchParams);
+    } else {
+      navigate(`/?search=${name}`);
+    }
   };
 
   const selectActiveGamesByGenre = (genre: string) => {
-    setSearchParams({genres: genre });
-    console.log(genre);
+    navigate(`/?genres=${genre}`);
   };
 
   const selectActiveGamesByPlayerSupport = (ps: string) => {
-    setSearchParams({playerSupports: ps });
-    console.log(ps);
+    navigate(`/?playerSupports=${ps}`);
   };
 
   return (

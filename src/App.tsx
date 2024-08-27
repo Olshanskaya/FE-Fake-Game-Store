@@ -5,10 +5,12 @@ import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { Cart } from "./pages/Cart";
 import { Dashboard } from "./pages/Dashboard";
+import { Header } from "./components/navigation/Header";
 
 function App() {
   return (
     <>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="game/:id" element={<GameDetails />} />
