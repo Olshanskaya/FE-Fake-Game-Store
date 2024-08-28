@@ -11,9 +11,9 @@ import {
   CarouselPrevious
 } from "@/components/ui/carousel";
 import { addGameToCart } from "@/api/order";
+import { Can } from "@/components/Can";
 
 export function GameDetails() {
-  const navigate = useNavigate();
   const { id } = useParams();
 
   const handleAddGameToCart = (id: string) => {
@@ -84,13 +84,19 @@ export function GameDetails() {
           <span className="text-gray-700 font-semibold">Price:</span>
           <span className="ml-2 text-gray-600">${game?.data?.price.toFixed(2)}</span>
         </div>
-
-        <Button
-          className="mt-6 w-full py-2 px-4 rounded-lg transition duration-300"
-          onClick={handleAddGameToCart(id)}
-        >
-          Add to Cart
-        </Button>
+        <Can
+          permission="ORDER:ADD_GAME"
+          permissionType="actions"
+          yes={() => (
+            <Button
+              className="mt-6 w-full py-2 px-4 rounded-lg transition duration-300"
+              onClick={() => handleAddGameToCart(id)}
+            >
+              Add to Cart
+            </Button>
+          )}
+          no={() => <p>Sign in to access your shopping cart</p>}
+        />
       </div>
     </div>
   );

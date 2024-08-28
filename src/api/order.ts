@@ -21,3 +21,13 @@ export const addGameToCart = async (id: string) => {
     return Promise.reject(new Error("Something went wrong"));
   }
 };
+
+export const checkoutOrder = async (): Promise<GlobalResponse<Order>> => {
+  try {
+    const res = await api.post("users/me/orders/current/checkout");
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};

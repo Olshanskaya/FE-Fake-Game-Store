@@ -11,11 +11,15 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getAllActiveGames } from "@/api/games";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
+import { addGameToCart } from "@/api/order";
 
 export function Home() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  const handleAddGameToCart = (id: string) => {
+    addGameToCart(id);
+  };
 
   const { data: games, isLoading } = useQuery({
     queryKey: ["games", searchParams.toString()],
@@ -49,7 +53,9 @@ export function Home() {
               <Can
                 permission="ORDER:ADD_GAME"
                 permissionType="actions"
-                yes={() => <Button>Add To Cart</Button>}
+                yes={() => (
+                  <Button onClick={() => handleAddGameToCart(game.id)}>Add To Cart</Button>
+                )}
                 no={() => <p>Sign in to access your shopping cart</p>}
               />
             </CardFooter>
