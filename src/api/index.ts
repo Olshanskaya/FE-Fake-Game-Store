@@ -12,6 +12,12 @@ const api = axios.create({
   baseURL
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = token ? "Bearer " + token.replace(/"/g, "") : "";
+  return config;
+});
+
 // use this to handle errors gracefully
 // api.interceptors.response.use(
 //   (response) => response,

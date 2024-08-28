@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/sheet";
 
 import { AlignJustify } from "lucide-react";
+import { LuUserSquare } from "react-icons/lu";
 import { LuShoppingBag } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { Can } from "../Can";
 import { useAuth } from "@/auth/AuthProvider";
 
 const ActionsButtons = () => {
-  const {logOut} = useAuth();
+  const { logOut } = useAuth();
   const navigate = useNavigate();
 
   const handleNavigationHome = () => {
@@ -36,6 +37,10 @@ const ActionsButtons = () => {
 
   const handleNavigationDashboard = () => {
     navigate(`/dashboard`);
+  };
+
+  const handleNavigationMe = () => {
+    navigate(`/me`);
   };
 
   const handleLogout = () => {
@@ -93,9 +98,14 @@ const ActionsButtons = () => {
                     permission="ME:LOGOUT"
                     permissionType="actions"
                     yes={() => (
-                      <Button variant="link" onClick={handleLogout}>
-                        Log Out
-                      </Button>
+                      <>
+                        <Button variant="link" onClick={handleLogout}>
+                          Log Out
+                        </Button>
+                        <Button variant="link" onClick={handleNavigationMe}>
+                          ME
+                        </Button>
+                      </>
                     )}
                   />
                 </div>
@@ -145,9 +155,12 @@ const ActionsButtons = () => {
             permission="ME:LOGOUT"
             permissionType="actions"
             yes={() => (
-              <Button className="text-md" variant="secondary" onClick={handleLogout}>
-                Log Out
-              </Button>
+              <>
+                <Button className="text-md" variant="secondary" onClick={handleLogout}>
+                  Log Out
+                </Button>
+                <LuUserSquare className="w-8 h-8" color="white" onClick={handleNavigationMe} />
+              </>
             )}
           />
         </div>

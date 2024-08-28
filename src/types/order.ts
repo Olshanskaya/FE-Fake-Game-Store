@@ -21,7 +21,7 @@ export type Order = {
   createdAt: Date;
   status: OrderStatus;
   paymentStatus: PaymentStatus;
-  gameOrders: GameOrder[];
+  games: GameOrder[];
 };
 
 export type GameOrder = {

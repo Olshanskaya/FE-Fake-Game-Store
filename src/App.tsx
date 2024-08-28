@@ -7,6 +7,7 @@ import { Cart } from "./pages/Cart";
 import { Dashboard } from "./pages/Dashboard";
 import LayoutWithHeader from "./components/LayoutWithHeader";
 import { AuthProvider } from "./auth/AuthProvider";
+import { MyAccount } from "./pages/MyAccount";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="game/:id" element={<GameDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/me" element={<MyAccount />} />
           </Route>
 
           <Route path="/register" element={<Register />} />

@@ -8,12 +8,10 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import { Game, GamesListResponse } from "@/types/game";
 import { useQuery } from "@tanstack/react-query";
 import { getAllActiveGames } from "@/api/games";
-import { GlobalResponse, GlobalResponseStatus } from "@/types";
-import { ErrorResponse, useNavigate, useSearchParams } from "react-router-dom";
-import { Header } from "@/components/navigation/Header";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 
 export function Home() {
   const navigate = useNavigate();
