@@ -1,5 +1,4 @@
-import { Copy } from "lucide-react";
-
+import { checkoutOrder, payForOrder } from "@/api/order";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,15 +13,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 
-export function DialogPayForOrder() {
-  const navigate = useNavigate();
+export function DialogPayForOrder({ id }: { id: string }) {
+  const navigator = useNavigate();
   const handleCheckout = () => {
     console.log("checkout");
-    // checkoutOrder();
+    checkoutOrder();
   };
 
   const handlePay = (value: boolean) => {
+    console.log("id", id);
     console.log(value);
+    payForOrder({ orderId: id, isPaidSuccessfully: value });
+    navigator("/");
   };
 
   return (

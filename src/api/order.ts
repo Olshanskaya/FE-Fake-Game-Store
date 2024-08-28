@@ -1,6 +1,6 @@
 import { GlobalResponse } from "@/types";
 import api from ".";
-import { Order } from "@/types/order";
+import { Order, Pay } from "@/types/order";
 
 export const getCartOfCurrrentUser = async (): Promise<GlobalResponse<Order>> => {
   try {
@@ -25,6 +25,16 @@ export const addGameToCart = async (id: string) => {
 export const checkoutOrder = async (): Promise<GlobalResponse<Order>> => {
   try {
     const res = await api.post("users/me/orders/current/checkout");
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
+
+export const payForOrder = async (data: Pay): Promise<GlobalResponse<Order>> => {
+  try {
+    const res = await api.post("users/me/orders/current/pay", data);
     return res.data;
   } catch (error) {
     console.error(error);
