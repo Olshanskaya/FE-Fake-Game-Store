@@ -1,19 +1,18 @@
 "use client";
 
-import { Game } from "@/types/game";
-import { ColumnDef } from "@tanstack/react-table";
+import { addKeyToGame } from "@/api/games";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
+import { Game } from "@/types/game";
+import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { addKeyToGame } from "@/api/games";
+import { Button } from "../ui/button";
 import { EditGameDialog } from "./EditGameDialog";
 
 export const GameInDashboardColumns: ColumnDef<Game>[] = [

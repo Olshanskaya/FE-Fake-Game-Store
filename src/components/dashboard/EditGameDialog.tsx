@@ -6,16 +6,14 @@ import {
   SheetTitle,
   SheetTrigger
 } from "@/components/ui/sheet";
-import { Game, UpdateGame } from "@/types/game";
+import { Game } from "@/types/game";
 import { useState } from "react";
 import { LuFileEdit } from "react-icons/lu";
 import { EditGameForm } from "./EditGameForm";
-import { Button } from "../ui/button";
 
 export function EditGameDialog({ game }: { game: Game }) {
   const [isSheetOpen, setSheetOpen] = useState(false);
 
-  const openSheet = () => setSheetOpen(true);
   const closeSheet = () => setSheetOpen(false);
 
   return (

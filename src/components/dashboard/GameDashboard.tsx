@@ -1,8 +1,8 @@
+import { getAllGames } from "@/api/games";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { DataTable } from "../DataTable";
 import { GameInDashboardColumns } from "./GameInDashboardColumns";
-import { useSearchParams } from "react-router-dom";
-import { getAllGames } from "@/api/games";
 
 export function GameDashboard() {
   const [searchParams] = useSearchParams();
@@ -13,12 +13,14 @@ export function GameDashboard() {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  
 
   return (
     <div>
       <h1>GameDashboard</h1>
-      <DataTable columns={GameInDashboardColumns} data={gamesListResponse?.data?.allGamesList || []} />
+      <DataTable
+        columns={GameInDashboardColumns}
+        data={gamesListResponse?.data?.allGamesList || []}
+      />
     </div>
   );
 }
