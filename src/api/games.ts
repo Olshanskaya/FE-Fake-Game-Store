@@ -1,11 +1,19 @@
 import { GlobalResponse } from "@/types";
 import api from ".";
-import { CreateGame, Game, GamesListResponse, SingleGameWithReviews } from "../types/game";
+import {
+  CreateGame,
+  Game,
+  GamesListResponse,
+  KeyResponce,
+  SingleGameWithReviews
+} from "../types/game";
 
-export const getAllGames = async (params?: URLSearchParams) => {
+export const getAllGames = async (
+  params?: URLSearchParams
+): Promise<GlobalResponse<GamesListResponse>> => {
   try {
     console.log("params", params);
-    const res = await api.get("/games", { params });
+    const res = await api.get("/games/all", { params });
     return res.data;
   } catch (error) {
     console.error(error);
@@ -39,6 +47,16 @@ export const getGameById = async (id: string): Promise<GlobalResponse<SingleGame
 export const createOne = async (game: CreateGame) => {
   try {
     const res = await api.post("/games", game);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
+
+export const addKeyToGame = async (id: string): Promise<GlobalResponse<KeyResponce>> => {
+  try {
+    const res = await api.post("/games/keys/" + id);
     return res.data;
   } catch (error) {
     console.error(error);

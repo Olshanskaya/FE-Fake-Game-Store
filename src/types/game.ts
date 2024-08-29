@@ -100,6 +100,6 @@ export type UpdateGame = {
   description: string;
 };
 
-export type Key = {
+export type KeyResponce = {
   gameId: string;
 };

@@ -17,7 +17,8 @@ export function Home() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const handleAddGameToCart = (id: string) => {
+  const handleAddGameToCart = (id: string, event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     addGameToCart(id);
   };
 
@@ -54,7 +55,7 @@ export function Home() {
                 permission="ORDER:ADD_GAME"
                 permissionType="actions"
                 yes={() => (
-                  <Button onClick={() => handleAddGameToCart(game.id)}>Add To Cart</Button>
+                  <Button onClick={(event) => handleAddGameToCart(game.id, event)}>Add To Cart</Button>
                 )}
                 no={() => <p>Sign in to access your shopping cart</p>}
               />
