@@ -37,9 +37,6 @@ export const GameInDashboardColumns: ColumnDef<Game>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const game = row.original;
-      const handleAddKeyToGame = (id: string) => {
-        addKeyToGame(id);
-      };
       return (
         <div>
           <EditGameDialog game={game}></EditGameDialog>

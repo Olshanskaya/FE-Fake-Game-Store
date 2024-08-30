@@ -5,7 +5,8 @@ import {
   Game,
   GamesListResponse,
   KeyResponce,
-  SingleGameWithReviews
+  SingleGameWithReviews,
+  UpdateGame
 } from "../types/game";
 
 export const getAllGames = async (
@@ -44,9 +45,19 @@ export const getGameById = async (id: string): Promise<GlobalResponse<SingleGame
   }
 };
 
-export const createOne = async (game: CreateGame) => {
+export const createGame = async (game: CreateGame) => {
   try {
     const res = await api.post("/games", game);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
+
+export const updateGame = async (game: UpdateGame) => {
+  try {
+    const res = await api.patch("/games", game);
     return res.data;
   } catch (error) {
     console.error(error);

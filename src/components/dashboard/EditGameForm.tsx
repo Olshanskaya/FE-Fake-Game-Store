@@ -1,4 +1,4 @@
-import { Game, GENRES, PLAYER_SUPPORT, UpdateGame } from "@/types/game";
+import { CreateGame, Game, GENRES, PLAYER_SUPPORT, UpdateGame } from "@/types/game";
 
 ("use client");
 
@@ -24,6 +24,8 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import { createGame, updateGame } from "@/api/games";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -49,6 +51,8 @@ interface EditGameFormProps extends Game {
 }
 
 export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormProps) {
+  const queryClient = useQueryClient();
+
   const form = useForm<Game>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,16 +75,25 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values.genreList);
-    // console.log(values.playerSupport);
     console.log(values);
-    const newGame: UpdateGame = {
-      ...values,
-      id: props.id,
-      releaseDate: props.releaseDate
-    } as UpdateGame;
-    console.log(newGame);
-
+    if (props.id === "") {
+      console.log("create new game");
+      const newGame: CreateGame = {
+        ...values
+      } as CreateGame;
+      console.log(newGame);
+      createGame(newGame);
+    } else {
+      console.log("update game");
+      const newGame: UpdateGame = {
+        ...values,
+        id: props.id
+      } as UpdateGame;
+      console.log(newGame);
+      updateGame(newGame);
+    }
+    queryClient.invalidateQueries({ queryKey: ["allGamesListResponse"] });
+    window.location.reload();
     handleSubmit();
   }
 
