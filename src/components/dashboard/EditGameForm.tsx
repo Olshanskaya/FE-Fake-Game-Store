@@ -1,8 +1,11 @@
-import { Game, UpdateGame } from "@/types/game";
+import { Game, GENRES, PLAYER_SUPPORT, UpdateGame } from "@/types/game";
 
 ("use client");
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -11,24 +14,49 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger
+} from "@/components/ui/MultiSelector";
+
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import api from "@/api";
+
 const formSchema = z.object({
   name: z.string().min(1).max(50),
   developer: z.string().min(1).max(50),
   systemRequirements: z.string().min(10).max(500),
   description: z.string().min(10).max(500),
+  genreList: z.array(z.string().min(1).max(50)),
+  playerSupport: z.array(z.string().min(1).max(50)),
+  thumbnail: z.string().min(1).max(150),
+  images: z.array(z.string().min(1).max(150)),
+  // releaseDate: z.date(),
+  // price: z
+  //   .number()
+  //   .min(0)
+  //   .refine((value) => {
+  //     const decimalPart = value.toString().split(".")[1];
+  //     return !decimalPart || decimalPart.length <= 2;
+  //   }, "Price should have at most 2 decimal places")
   price: z
-    .number()
-    .min(0)
-    .refine((value) => {
-      const decimalPart = value.toString().split(".")[1];
-      return !decimalPart || decimalPart.length <= 2;
-    }, "Price should have at most 2 decimal places")
+    .string()
+    .min(1, "Price cannot be empty")
+    .transform((value) => value.replace(",", "."))
+    .refine((value) => !isNaN(parseFloat(value)), "Price must be a valid number")
+    .transform((value) => parseFloat(value))
+    .refine((value) => value >= 0, "Price cannot be negative")
 });
 
 interface EditGameFormProps extends Game {
@@ -36,7 +64,7 @@ interface EditGameFormProps extends Game {
 }
 
 export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormProps) {
-  const [newGame, setNewGame] = useState<UpdateGame>({ ...props });
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,19 +73,31 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
       developer: props.developer,
       systemRequirements: props.systemRequirements,
       description: props.description,
-      price: props.price
+      price: props.price.toString(),
+      genreList: props.genreList,
+      playerSupport: props.playerSupport,
+      thumbnail: props.thumbnail,
+      images: props.images
+      // releaseDate: props.releaseDate || new Date()
     }
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setNewGame({ ...newGame, ...values });
+    // console.log(values.genreList);
+    // console.log(values.playerSupport);
+    console.log(values);
+    const newGame: UpdateGame = {...values, id: props.id, releaseDate: props.releaseDate} as UpdateGame;
     console.log(newGame);
+
     handleSubmit();
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 overflow-y-auto max-h-full p-10"
+      >
         <FormField
           control={form.control}
           name="name"
@@ -71,6 +111,42 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
             </FormItem>
           )}
         />
+
+        {/* <FormField
+          control={form.control}
+          name="releaseDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>releaseDate</FormLabel>
+              <FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[280px] justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      // disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
 
         <FormField
           control={form.control}
@@ -121,8 +197,98 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
             <FormItem>
               <FormLabel>price</FormLabel>
               <FormControl>
-                <Input placeholder="price" {...field} />
+                <Input type="number" placeholder="price" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="genreList"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>genreList</FormLabel>
+              <FormControl>
+                <MultiSelector
+                  values={field.value}
+                  onValuesChange={(values) => form.setValue("genreList", values)}
+                  loop
+                  className="max-w-xs"
+                >
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput placeholder="Select your genreList" />
+                  </MultiSelectorTrigger>
+                  <MultiSelectorContent>
+                    <MultiSelectorList>
+                      {GENRES.map((genre) => (
+                        <MultiSelectorItem key={genre.genre} value={genre.genre}>
+                          {genre.genre}
+                        </MultiSelectorItem>
+                      ))}
+                    </MultiSelectorList>
+                  </MultiSelectorContent>
+                </MultiSelector>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="playerSupport"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>playerSupport</FormLabel>
+              <FormControl>
+                <MultiSelector
+                  values={field.value}
+                  onValuesChange={(values) => form.setValue("playerSupport", values)}
+                  loop
+                  className="max-w-xs"
+                >
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput placeholder="Select playerSupport" />
+                  </MultiSelectorTrigger>
+                  <MultiSelectorContent>
+                    <MultiSelectorList>
+                      {PLAYER_SUPPORT.map((ps) => (
+                        <MultiSelectorItem key={ps.supportType} value={ps.supportType}>
+                          {ps.supportType}
+                        </MultiSelectorItem>
+                      ))}
+                    </MultiSelectorList>
+                  </MultiSelectorContent>
+                </MultiSelector>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="thumbnail"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>thumbnail</FormLabel>
+              <FormControl>
+                <Input placeholder="thumbnail" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="images"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>images</FormLabel>
+              <FormControl></FormControl>
               <FormMessage />
             </FormItem>
           )}

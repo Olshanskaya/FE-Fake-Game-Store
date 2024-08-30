@@ -23,7 +23,7 @@ export function EditGameDialog({ game }: { game: Game }) {
           <LuFileEdit className="w-8 h-8" />
         </button>
       </SheetTrigger>
-      <SheetContent aria-describedby={undefined}>
+      <SheetContent aria-describedby={undefined} style={{ maxWidth: '60vw' }}>
         <SheetHeader>
           <SheetTitle>Edit Game</SheetTitle>
         </SheetHeader>
