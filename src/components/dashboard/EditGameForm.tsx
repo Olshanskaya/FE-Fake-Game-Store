@@ -1,11 +1,8 @@
 import { Game, GENRES, PLAYER_SUPPORT, UpdateGame } from "@/types/game";
 
 ("use client");
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -25,13 +22,8 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import api from "@/api";
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -42,14 +34,7 @@ const formSchema = z.object({
   playerSupport: z.array(z.string().min(1).max(50)),
   thumbnail: z.string().min(1).max(150),
   images: z.array(z.string().min(1).max(150)),
-  // releaseDate: z.date(),
-  // price: z
-  //   .number()
-  //   .min(0)
-  //   .refine((value) => {
-  //     const decimalPart = value.toString().split(".")[1];
-  //     return !decimalPart || decimalPart.length <= 2;
-  //   }, "Price should have at most 2 decimal places")
+  releaseDate: z.date(),
   price: z
     .string()
     .min(1, "Price cannot be empty")
@@ -64,9 +49,7 @@ interface EditGameFormProps extends Game {
 }
 
 export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormProps) {
-
-
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<Game>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: props.name,
@@ -77,16 +60,25 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
       genreList: props.genreList,
       playerSupport: props.playerSupport,
       thumbnail: props.thumbnail,
-      images: props.images
-      // releaseDate: props.releaseDate || new Date()
+      images: props.images,
+      releaseDate: new Date(props.releaseDate)
     }
+  });
+
+  const { fields, append, remove } = useFieldArray<Game>({
+    control: form.control,
+    name: "images" as never
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // console.log(values.genreList);
     // console.log(values.playerSupport);
     console.log(values);
-    const newGame: UpdateGame = {...values, id: props.id, releaseDate: props.releaseDate} as UpdateGame;
+    const newGame: UpdateGame = {
+      ...values,
+      id: props.id,
+      releaseDate: props.releaseDate
+    } as UpdateGame;
     console.log(newGame);
 
     handleSubmit();
@@ -112,41 +104,31 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
           )}
         />
 
-        {/* <FormField
+        <FormField
           control={form.control}
           name="releaseDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>releaseDate</FormLabel>
+              <FormLabel>Release date</FormLabel>
               <FormControl>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[280px] justify-start text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      // disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <Input
+                  type="date"
+                  {...field}
+                  onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : null)}
+                  value={
+                    field.value instanceof Date
+                      ? `${field.value.getFullYear()}-${String(field.value.getMonth() + 1).padStart(
+                          2,
+                          "0"
+                        )}-${String(field.value.getDate()).padStart(2, "0")}`
+                      : field.value || ""
+                  }
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         <FormField
           control={form.control}
@@ -282,17 +264,31 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="images"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>images</FormLabel>
-              <FormControl></FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex justify-start items-center gap-3 overflow-x-auto">
+          {form.getValues().images.map((image, i) => (
+            <img className="max-h-40" key={image} src={image} alt={`Preview for ${i + 1} image`} />
+          ))}
+        </div>
+        <FormItem className="flex flex-col">
+          <FormLabel>Images</FormLabel>
+          {fields.map((field, index) => (
+            <div key={field.id} className="flex items-center space-x-2">
+              <FormControl>
+                <Input
+                  placeholder={`Image URL #${index + 1}`}
+                  {...form.register(`images.${index}`)}
+                />
+              </FormControl>
+              <Button type="button" onClick={() => remove(index)} variant="outline">
+                Remove
+              </Button>
+            </div>
+          ))}
+          <Button type="button" onClick={() => append("")} variant="outline">
+            Add Image
+          </Button>
+          <FormMessage />
+        </FormItem>
 
         <Button type="submit">Submit</Button>
       </form>
