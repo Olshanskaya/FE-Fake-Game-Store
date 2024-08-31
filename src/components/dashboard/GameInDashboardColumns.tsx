@@ -1,6 +1,6 @@
 "use client";
 
-import { addKeyToGame } from "@/api/games";
+import { activateGame, addKeyToGame, deactivateGame } from "@/api/games";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,6 +53,16 @@ export const GameInDashboardColumns: ColumnDef<Game>[] = [
         addKeyToGame(id);
       };
 
+      const handleDeactivateGame = (id: string) => {
+        deactivateGame(id);
+        console.log("Deactivate", id);
+      };
+
+      const handleActivateGame = (id: string) => {
+        activateGame(id);
+        console.log("Activate", id);
+      };
+
       return (
         <div>
           <DropdownMenu>
@@ -67,9 +77,12 @@ export const GameInDashboardColumns: ColumnDef<Game>[] = [
               <DropdownMenuItem onClick={() => handleAddKeyToGame(game.id)}>
                 Add Key To Game
               </DropdownMenuItem>
-              <DropdownMenuItem>Delete (not active)</DropdownMenuItem>
-              <DropdownMenuItem>Activate</DropdownMenuItem>
-              <DropdownMenuItem>Deactivate</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleActivateGame(game.id)}>
+                Activate
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleDeactivateGame(game.id)}>
+                Deactivate
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>

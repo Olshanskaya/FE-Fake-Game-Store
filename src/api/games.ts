@@ -2,7 +2,6 @@ import { GlobalResponse } from "@/types";
 import api from ".";
 import {
   CreateGame,
-  Game,
   GamesListResponse,
   KeyResponce,
   SingleGameWithReviews,
@@ -68,6 +67,26 @@ export const updateGame = async (game: UpdateGame) => {
 export const addKeyToGame = async (id: string): Promise<GlobalResponse<KeyResponce>> => {
   try {
     const res = await api.post("/games/keys/" + id);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
+
+export const activateGame = async (id: string): Promise<GlobalResponse<KeyResponce>> => {
+  try {
+    const res = await api.patch("/games/activation/" + id);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
+
+export const deactivateGame = async (id: string): Promise<GlobalResponse<KeyResponce>> => {
+  try {
+    const res = await api.patch("/games/deactivation/" + id);
     return res.data;
   } catch (error) {
     console.error(error);
