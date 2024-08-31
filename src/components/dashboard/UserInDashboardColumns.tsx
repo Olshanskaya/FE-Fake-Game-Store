@@ -1,7 +1,6 @@
 "use client";
 
-import { User } from "@/types/user";
-import { ColumnDef } from "@tanstack/react-table";
+import { updateUserRole } from "@/api/user";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,10 +9,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { MoreHorizontal } from "lucide-react";
-import { updateUserRole } from "@/api/user";
+import { User } from "@/types/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "../ui/button";
 
 export const UserInDashboardColumns: ColumnDef<User>[] = [
   {

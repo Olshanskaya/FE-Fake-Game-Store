@@ -20,12 +20,12 @@ import {
   MultiSelectorTrigger
 } from "@/components/ui/MultiSelector";
 
+import { createGame, updateGame } from "@/api/games";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-import { createGame, updateGame } from "@/api/games";
-import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -52,6 +52,20 @@ interface EditGameFormProps extends Game {
 
 export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormProps) {
   const queryClient = useQueryClient();
+
+  const mutation1 = useMutation({
+    mutationFn: createGame,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allGamesListResponse"] });
+    }
+  });
+
+  const mutation2 = useMutation({
+    mutationFn: updateGame,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allGamesListResponse"] });
+    }
+  });
 
   const form = useForm<Game>({
     resolver: zodResolver(formSchema),
@@ -82,7 +96,7 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
         ...values
       } as CreateGame;
       console.log(newGame);
-      createGame(newGame);
+      mutation1.mutate(newGame);
     } else {
       console.log("update game");
       const newGame: UpdateGame = {
@@ -90,10 +104,8 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
         id: props.id
       } as UpdateGame;
       console.log(newGame);
-      updateGame(newGame);
+      mutation2.mutate(newGame);
     }
-    queryClient.invalidateQueries({ queryKey: ["allGamesListResponse"] });
-    window.location.reload();
     handleSubmit();
   }
 

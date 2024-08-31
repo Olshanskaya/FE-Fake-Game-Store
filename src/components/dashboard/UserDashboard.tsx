@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { getAllUsers } from "@/api/user";
+import { useQuery } from "@tanstack/react-query";
 import { DataTable } from "../DataTable";
-import { getAllUsers, updateUserRole } from "@/api/user";
 import { UserInDashboardColumns } from "./UserInDashboardColumns";
 
 export function UserDashboard() {
@@ -8,7 +8,6 @@ export function UserDashboard() {
     queryKey: ["allUsersList"],
     queryFn: () => getAllUsers()
   });
-
 
   if (isLoading) return <div>Loading...</div>;
 

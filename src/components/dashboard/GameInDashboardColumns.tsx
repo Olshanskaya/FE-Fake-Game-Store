@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Game } from "@/types/game";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "../ui/button";
@@ -49,17 +50,40 @@ export const GameInDashboardColumns: ColumnDef<Game>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const game = row.original;
+      const queryClient = useQueryClient();
+
+      const mutation1 = useMutation({
+        mutationFn: addKeyToGame,
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["allGamesListResponse"] });
+        }
+      });
+
+      const mutation2 = useMutation({
+        mutationFn: deactivateGame,
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["allGamesListResponse"] });
+        }
+      });
+
+      const mutation3 = useMutation({
+        mutationFn: activateGame,
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["allGamesListResponse"] });
+        }
+      });
+
       const handleAddKeyToGame = (id: string) => {
-        addKeyToGame(id);
+        mutation1.mutate(id);
       };
 
       const handleDeactivateGame = (id: string) => {
-        deactivateGame(id);
+        mutation2.mutate(id);
         console.log("Deactivate", id);
       };
 
       const handleActivateGame = (id: string) => {
-        activateGame(id);
+        mutation3.mutate(id);
         console.log("Activate", id);
       };
 
