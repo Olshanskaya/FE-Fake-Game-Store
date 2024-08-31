@@ -13,6 +13,7 @@ import {
 import { Button } from "../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { updateUserRole } from "@/api/user";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const UserInDashboardColumns: ColumnDef<User>[] = [
   {
@@ -36,12 +37,20 @@ export const UserInDashboardColumns: ColumnDef<User>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original;
+      const queryClient = useQueryClient();
+
+      const mutation = useMutation({
+        mutationFn: updateUserRole,
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["allUsersList"] });
+        }
+      });
 
       const handleChangeRole = (user: User) => {
         if (user.role === "USER") {
-          updateUserRole(user.id, { role: "ADMIN" });
+          mutation.mutate({ id: user.id, data: { role: "ADMIN" } });
         } else {
-          updateUserRole(user.id, { role: "USER" });
+          mutation.mutate({ id: user.id, data: { role: "USER" } });
         }
       };
 

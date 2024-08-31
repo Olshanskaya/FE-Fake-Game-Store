@@ -55,7 +55,9 @@ export function Home() {
                 permission="ORDER:ADD_GAME"
                 permissionType="actions"
                 yes={() => (
-                  <Button onClick={(event) => handleAddGameToCart(game.id, event)}>Add To Cart</Button>
+                  <Button onClick={(event) => handleAddGameToCart(game.id, event)}>
+                    Add To Cart
+                  </Button>
                 )}
                 no={() => <p>Sign in to access your shopping cart</p>}
               />
