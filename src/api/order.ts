@@ -22,6 +22,16 @@ export const addGameToCart = async (id: string) => {
   }
 };
 
+export const deleteGameFromCart = async (id: string) => {
+  try {
+    const res = await api.delete("users/me/orders/current/game/" + id);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
+
 export const checkoutOrder = async (): Promise<GlobalResponse<Order>> => {
   try {
     const res = await api.post("users/me/orders/current/checkout");
