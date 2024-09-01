@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import App from "./App";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -13,6 +14,16 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <App />
       <ReactQueryDevtools initialIsOpen={false} />
+      <Toaster
+        position="bottom-left"
+        toastOptions={{
+          className: "",
+          style: {
+            background: 'var(--gradient)',
+            color: "#fff"
+          }
+        }}
+      />
     </BrowserRouter>
   </QueryClientProvider>
 );
