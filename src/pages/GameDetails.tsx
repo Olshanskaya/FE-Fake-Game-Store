@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/carousel";
 import { addGameToCart } from "@/api/order";
 import { Can } from "@/components/Can";
+import { useAuth } from "@/auth/AuthProvider";
 
 export function GameDetails() {
   const { id } = useParams();
+  const { user, logInUser } = useAuth();
 
   const handleAddGameToCart = (id: string) => {
     addGameToCart(id);

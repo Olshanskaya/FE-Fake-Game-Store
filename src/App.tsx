@@ -8,6 +8,7 @@ import { Dashboard } from "./pages/Dashboard";
 import LayoutWithHeader from "./components/LayoutWithHeader";
 import { AuthProvider } from "./auth/AuthProvider";
 import { MyAccount } from "./pages/MyAccount";
+import { VerifyEmail } from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/me" element={<MyAccount />} />
           </Route>
-
+          <Route path="/auth/verify/:token" element={<VerifyEmail />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>

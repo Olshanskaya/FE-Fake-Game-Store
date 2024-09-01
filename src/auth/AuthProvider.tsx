@@ -1,6 +1,5 @@
-import { logIn } from "@/api/auth";
-import { LoggedInUser, User } from "@/types/user";
-import axios from "axios";
+import { logIn, signup, verifyEmail } from "@/api/auth";
+import { CreateUser, User } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +9,8 @@ type UserContextType = {
   logInUser: (email: string, password: string) => void;
   logOut: () => void;
   isLoggedIn: () => boolean;
+  signupUser: (data: CreateUser) => void;
+  verifyUserEmail: (token: string) => void;
 };
 
 type Props = { children: React.ReactNode };
@@ -46,6 +47,34 @@ export const AuthProvider = ({ children }: Props) => {
       });
   };
 
+  const signupUser = async (data: CreateUser) => {
+    await signup(data)
+      .then((res) => {
+        localStorage.setItem("token", res.data?.token || "");
+        localStorage.setItem("user", JSON.stringify(res.data?.user));
+        setToken(res.data?.token || "");
+        setUser(res.data?.user || null);
+        navigate("/me");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const verifyUserEmail = async (token: string) => {
+    await verifyEmail(token)
+      .then((res) => {
+        localStorage.setItem("token", res.data?.token || "");
+        localStorage.setItem("user", JSON.stringify(res.data?.user));
+        setToken(res.data?.token || "");
+        setUser(res.data?.user || null);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const isLoggedIn = () => {
     return !!user;
   };
@@ -59,7 +88,9 @@ export const AuthProvider = ({ children }: Props) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, token, logInUser, logOut, isLoggedIn }}>
+    <UserContext.Provider
+      value={{ user, token, logInUser, logOut, isLoggedIn, signupUser, verifyUserEmail }}
+    >
       {isReady ? children : null}
     </UserContext.Provider>
   );

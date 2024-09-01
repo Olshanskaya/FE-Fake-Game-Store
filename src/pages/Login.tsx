@@ -58,7 +58,6 @@ export function Login() {
                   <FormControl>
                     <Input placeholder="email..." {...field} />
                   </FormControl>
-                  {/* <FormDescription>Enter the email</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -72,7 +71,6 @@ export function Login() {
                   <FormControl>
                     <Input placeholder="password..." {...field} />
                   </FormControl>
-                  {/* <FormDescription>Enter the password</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
