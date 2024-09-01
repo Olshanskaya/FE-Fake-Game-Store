@@ -25,6 +25,8 @@ export const getAllActiveGames = async (
   params?: URLSearchParams
 ): Promise<GlobalResponse<GamesListResponse>> => {
   try {
+    params = params ? params : new URLSearchParams();
+    params.set("size", "15");
     console.log("params", params);
     const res = await api.get("/games/active", { params });
     return res.data;

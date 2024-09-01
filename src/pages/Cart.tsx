@@ -17,7 +17,6 @@ export function Cart() {
   return (
     <div>
       <h1>Cart</h1>
-      {/* <p>{cart?.data?.id}</p> */}
       <div className="container mx-auto py-10">
         <DataTable columns={GameInCartColumns} data={cart?.data?.games ?? []} />
         <p className="py-10">Total Price: {cart?.data?.totalPrice?.toFixed(2) ?? 0}</p>

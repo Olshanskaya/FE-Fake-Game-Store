@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { DataTable } from "../DataTable";
 import { EditGameDialog } from "./EditGameDialog";
 import { GameInDashboardColumns } from "./GameInDashboardColumns";
+import PaginationControls from "../PaginationControls";
 
 export function GameDashboard() {
   const [searchParams] = useSearchParams();
@@ -42,6 +43,18 @@ export function GameDashboard() {
         columns={GameInDashboardColumns}
         data={gamesListResponse?.data?.allGamesList || []}
       />
+      <div className="grid justify-center p-10">
+        {gamesListResponse?.data?.allGamesHead && (
+          <PaginationControls
+            hasNextPage={
+              gamesListResponse.data.allGamesHead.currentPageNumber <
+              gamesListResponse.data.allGamesHead.totalPages
+            }
+            hasPrevPage={gamesListResponse.data.allGamesHead.currentPageNumber > 1}
+            allGamesHead={gamesListResponse.data.allGamesHead}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -289,11 +289,6 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
           )}
         />
 
-        <div className="flex justify-start items-center gap-3 overflow-x-auto">
-          {form.getValues().images.map((image, i) => (
-            <img className="max-h-40" key={image} src={image} alt={`Preview for ${i + 1} image`} />
-          ))}
-        </div>
         <FormItem className="flex flex-col">
           <FormLabel>Images</FormLabel>
           {fields.map((field, index) => (

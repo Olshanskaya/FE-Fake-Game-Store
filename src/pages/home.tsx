@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllActiveGames } from "@/api/games";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { addGameToCart } from "@/api/order";
+import PaginationControls from "@/components/PaginationControls";
 
 export function Home() {
   const navigate = useNavigate();
@@ -64,6 +65,17 @@ export function Home() {
             </CardFooter>
           </Card>
         ))}
+      </div>
+      <div className="grid justify-center p-10">
+        {games?.data?.allGamesHead && (
+          <PaginationControls
+            hasNextPage={
+              games.data.allGamesHead.currentPageNumber < games.data.allGamesHead.totalPages
+            }
+            hasPrevPage={games.data.allGamesHead.currentPageNumber > 1}
+            allGamesHead={games.data.allGamesHead}
+          />
+        )}
       </div>
     </div>
   );

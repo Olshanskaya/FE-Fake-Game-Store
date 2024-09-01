@@ -11,7 +11,7 @@ export function MyAccount() {
         <p>{user.email}</p>
         <p>{user.name}</p>
         <p>{user.role}</p>
-        <p>{user.id}</p>
+        <p>{user.activeStatus}</p>
     </div>
   );
 }
