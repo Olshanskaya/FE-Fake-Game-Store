@@ -34,15 +34,15 @@ export function Home() {
 
   return (
     <div className="p-2">
-      <div className="grid grid-cols-3 gap-10 p-8">
+      <div className="grid grid-cols-5 gap-10 p-8">
         {isLoading && <p>Loading...</p>}
         {games?.data?.allGamesList.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
-            <CardHeader>
+            <CardHeader className="flex flex-col text-center">
               <CardTitle>{game.name}</CardTitle>
               <CardDescription>{game.description}</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col items-center">
               <img
                 className="object-cover h-72 w-72 "
                 src={game.thumbnail}
@@ -54,7 +54,10 @@ export function Home() {
                 permission="ORDER:ADD_GAME"
                 permissionType="actions"
                 yes={() => (
-                  <Button onClick={(event) => handleAddGameToCart(game.id, event)}>
+                  <Button
+                    className="w-full"
+                    onClick={(event) => handleAddGameToCart(game.id, event)}
+                  >
                     Add To Cart
                   </Button>
                 )}
