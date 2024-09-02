@@ -84,7 +84,7 @@ export function GameDetails() {
 
         <div className="mt-4 flex items-center">
           <span className="text-gray-700 font-semibold">Price:</span>
-          <span className="ml-2 text-gray-600">${game?.data?.price.toFixed(2)}</span>
+          <span className="ml-2 text-gray-600">{game?.data?.price.toFixed(2)}</span>
         </div>
         <Can
           permission="ORDER:ADD_GAME"

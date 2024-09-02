@@ -299,12 +299,12 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
                   {...form.register(`images.${index}`)}
                 />
               </FormControl>
-              <Button type="button" onClick={() => remove(index)} variant="outline">
+              <Button type="button" onClick={() => remove(index)} variant="destructive">
                 Remove
               </Button>
             </div>
           ))}
-          <Button type="button" onClick={() => append("")} variant="outline">
+          <Button type="button" onClick={() => append("")} variant="secondary">
             Add Image
           </Button>
           <FormMessage />

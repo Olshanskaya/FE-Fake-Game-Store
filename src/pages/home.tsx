@@ -1,4 +1,7 @@
+import { getAllActiveGames } from "@/api/games";
+import { addGameToCart } from "@/api/order";
 import { Can } from "@/components/Can";
+import PaginationControls from "@/components/PaginationControls";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,10 +12,7 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
-import { getAllActiveGames } from "@/api/games";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { addGameToCart } from "@/api/order";
-import PaginationControls from "@/components/PaginationControls";
 
 export function Home() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export function Home() {
 
   return (
     <div className="p-2">
-      <div className="grid grid-cols-3 gap-10">
+      <div className="grid grid-cols-3 gap-10 p-8">
         {isLoading && <p>Loading...</p>}
         {games?.data?.allGamesList.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
@@ -43,10 +43,8 @@ export function Home() {
               <CardDescription>{game.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Price: {game.price}</p>
-              <p>Rating: {game.rating}</p>
-              <p>Genres: {game.genreList}</p>
               <img
+                className="object-cover h-72 w-72 "
                 src={game.thumbnail}
                 alt="https://res.cloudinary.com/df5iprard/image/upload/c_thumb,w_200,g_face/v1723707873/2024-08-15_104400_j19p5p.png"
               />

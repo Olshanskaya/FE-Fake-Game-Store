@@ -33,7 +33,16 @@ export const RBAC_ROLES: RoleControl = {
   },
   ADMIN: {
     views: ["HOME:VIEW", "CART:VIEW", "ME:VIEW"],
-    actions: ["GAME:GET", "GAME:REMOVE", "GAME:ADD", "GAME:EDIT", "ME:LOGOUT", "DASHBOARD:ACCESS"]
+    actions: [
+      "GAME:GET",
+      "GAME:REMOVE",
+      "GAME:ADD",
+      "GAME:EDIT",
+      "ME:LOGOUT",
+      "DASHBOARD:ACCESS",
+      "ORDER:ADD_GAME",
+      "ORDER:REMOVE_GAME"
+    ]
   },
   USER: {
     views: ["HOME:VIEW", "CART:VIEW", "ME:VIEW"],
