@@ -1,8 +1,12 @@
 import { getGameById } from "@/api/games";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
+import { addGameToCart } from "@/api/order";
+import { addGameToFav } from "@/api/user";
+import { useAuth } from "@/auth/AuthProvider";
+import { Can } from "@/components/Can";
 import {
   Carousel,
   CarouselContent,
@@ -10,9 +14,7 @@ import {
   CarouselNext,
   CarouselPrevious
 } from "@/components/ui/carousel";
-import { addGameToCart } from "@/api/order";
-import { Can } from "@/components/Can";
-import { useAuth } from "@/auth/AuthProvider";
+import { LuHeart } from "react-icons/lu";
 
 export function GameDetails() {
   const { id } = useParams();
@@ -28,6 +30,11 @@ export function GameDetails() {
     queryKey: ["game", id?.toString()],
     queryFn: () => getGameById(id)
   });
+
+  const handleAddGameToFavorite = (id: string, event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    addGameToFav(id);
+  };
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -49,6 +56,15 @@ export function GameDetails() {
         </Carousel>
       </div>
       <div className="p-6">
+        <div className="flex justify-end items-center">
+          <button
+            onClick={(event) => handleAddGameToFavorite(game?.data?.id ?? "", event)}
+            className="p-3 rounded-full bg-gray-200 hover:bg-gray-300"
+          >
+            <LuHeart color="red" size={24} />
+          </button>
+        </div>
+
         <h2 className="text-2xl font-bold text-gray-800">{game?.data?.name}</h2>
 
         <div className="mt-2 text-gray-600">

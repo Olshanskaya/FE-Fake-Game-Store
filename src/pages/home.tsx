@@ -1,5 +1,6 @@
 import { getAllActiveGames } from "@/api/games";
 import { addGameToCart } from "@/api/order";
+import { addGameToFav } from "@/api/user";
 import { Can } from "@/components/Can";
 import PaginationControls from "@/components/PaginationControls";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
+import { LuHeart } from "react-icons/lu";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function Home() {
@@ -32,13 +34,21 @@ export function Home() {
     navigate(`/game/${id}`);
   };
 
+  const handleAddGameToFavorite = (id: string, event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    addGameToFav(id);
+  };
+
   return (
     <div className="p-2">
-      <div className="grid grid-cols-5 gap-10 p-8">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 p-8">
         {isLoading && <p>Loading...</p>}
         {games?.data?.allGamesList.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
             <CardHeader className="flex flex-col text-center">
+              <button onClick={(event) => handleAddGameToFavorite(game.id, event)}>
+                <LuHeart color="red" />
+              </button>
               <CardTitle>{game.name}</CardTitle>
               <CardDescription>{game.description}</CardDescription>
             </CardHeader>
