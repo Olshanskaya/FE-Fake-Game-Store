@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import toast from "react-hot-toast";
 
 const isDevelopment = import.meta.env.MODE === "development";
@@ -19,12 +19,11 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     toast.error(error.response.data.error.errorMessage);
   }
-)
+);
 
 export default api;
