@@ -51,3 +51,13 @@ export const payForOrder = async (data: Pay): Promise<GlobalResponse<Order>> => 
     return Promise.reject(new Error("Something went wrong"));
   }
 };
+
+export const getCurrentUsersOrders = async (): Promise<GlobalResponse<Order[]>> => {
+  try {
+    const res = await api.get("users/me/orders");
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
