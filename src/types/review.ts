@@ -9,7 +9,7 @@ export type Review = {
 
 export type EmbeddedReview = {
   reviewID: string;
-  description: string;
+  reviewDescription: string;
   starRating: number;
   createdAt: Date;
   name: string;

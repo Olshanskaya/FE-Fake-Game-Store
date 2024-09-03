@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import '@smastrom/react-rating/style.css'
 
 import App from "./App";
 import "./index.css";

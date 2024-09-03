@@ -10,7 +10,9 @@ import { AuthProvider } from "./auth/AuthProvider";
 import { MyAccount } from "./pages/MyAccount";
 import { VerifyEmail } from "./pages/VerifyEmail";
 
+
 function App() {
+
   return (
     <>
       <AuthProvider>

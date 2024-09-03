@@ -1,4 +1,4 @@
-import { Review } from "./review";
+import { EmbeddedReview, Review } from "./review";
 
 export const GENRES: { genre: string; description: string }[] = [
   { genre: "ACTION", description: "Games that emphasize physical challenges, requiring quick reflexes and coordination." },
@@ -83,7 +83,7 @@ export type SingleGameWithReviews = {
   sku: string;
   isActive: boolean;
   averageRating: number;
-  reviews: Review[];
+  reviews: EmbeddedReview[];
 };
 
 export type UpdateGame = {
