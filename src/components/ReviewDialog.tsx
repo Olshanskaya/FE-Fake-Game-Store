@@ -11,7 +11,6 @@ import { useState } from "react";
 import { ReviewForm } from "./ReviewForm";
 import { Button } from "./ui/button";
 
-
 export function ReviewDialog({ game }: { game: SingleGameWithReviews }) {
   const [isSheetOpen, setSheetOpen] = useState(false);
 

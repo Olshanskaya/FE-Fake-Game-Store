@@ -1,11 +1,17 @@
 import { SingleGameWithReviews } from "@/types/game";
 import { EmbeddedReview } from "@/types/review";
-import { ReviewDialog } from "./ReviewDialog";
-import { Rating } from "@smastrom/react-rating";
+import { Rating, ThinStar } from "@smastrom/react-rating";
 import { Can } from "./Can";
+import { ReviewDialog } from "./ReviewDialog";
 
 export function Reviews({ game }: { game: SingleGameWithReviews }) {
   const reviews: EmbeddedReview[] = game.reviews;
+
+  const customStyles = {
+    itemShapes: ThinStar,
+    activeFillColor: "#780206",
+    inactiveFillColor: "#d3d3d3"
+  };
 
   return (
     <div className="w-full">
@@ -29,7 +35,12 @@ export function Reviews({ game }: { game: SingleGameWithReviews }) {
               >
                 <div className="flex items-center mb-2">
                   <div className="flex items-center">
-                    <Rating style={{ maxWidth: 250 }} value={review.starRating} />
+                    <Rating
+                      style={{ maxWidth: 250 }}
+                      readOnly
+                      value={review.starRating}
+                      itemStyles={customStyles}
+                    />
                   </div>
                   <span className="ml-2 text-sm text-gray-600">{review.starRating} out of 5</span>
                 </div>

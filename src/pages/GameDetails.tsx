@@ -14,10 +14,17 @@ import {
   CarouselNext,
   CarouselPrevious
 } from "@/components/ui/carousel";
+import { Rating, ThinStar } from "@smastrom/react-rating";
 import { LuHeart } from "react-icons/lu";
 
 export function GameDetails() {
   const { id } = useParams();
+
+  const customStyles = {
+    itemShapes: ThinStar,
+    activeFillColor: "#780206",
+    inactiveFillColor: "#d3d3d3"
+  };
 
   const handleAddGameToCart = (id: string) => {
     addGameToCart(id);
@@ -71,6 +78,13 @@ export function GameDetails() {
             <div className="mt-2 text-gray-600">
               <p>{game?.data?.description}</p>
             </div>
+
+            <Rating
+              style={{ maxWidth: 250 }}
+              readOnly
+              value={game?.data?.averageRating || 0}
+              itemStyles={customStyles}
+            />
 
             <div className="mt-4 flex items-center">
               <span className="text-gray-700 font-semibold">Developer:</span>

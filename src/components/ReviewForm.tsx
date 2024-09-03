@@ -10,7 +10,7 @@ import {
   FormMessage
 } from "@/components/ui/form";
 
-import { Rating } from "@smastrom/react-rating";
+import { Rating, ThinStar } from "@smastrom/react-rating";
 
 import { createReview } from "@/api/review";
 import { Input } from "@/components/ui/input";
@@ -58,6 +58,12 @@ export function ReviewForm({ onSubmit: handleSubmit, gameId }: Props) {
     handleSubmit();
   }
 
+  const customStyles = {
+    itemShapes: ThinStar,
+    activeFillColor: "#780206",
+    inactiveFillColor: "#d3d3d3"
+  };
+
   return (
     <Form {...form}>
       <form
@@ -85,7 +91,12 @@ export function ReviewForm({ onSubmit: handleSubmit, gameId }: Props) {
             <FormItem>
               <FormLabel>Star Rating</FormLabel>
               <FormControl>
-                <Rating style={{ maxWidth: 250 }} value={field.value} onChange={field.onChange} />
+                <Rating
+                  style={{ maxWidth: 250 }}
+                  value={field.value}
+                  onChange={field.onChange}
+                  itemStyles={customStyles}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
