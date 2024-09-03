@@ -37,7 +37,7 @@ export function ReviewForm({ onSubmit: handleSubmit, gameId }: Props) {
     mutationFn: createReview,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["game"] });
-    }
+    }    
   });
 
   const form = useForm<CreateOrUpdateReview>({

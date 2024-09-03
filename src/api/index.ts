@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import toast from "react-hot-toast";
 
 const isDevelopment = import.meta.env.MODE === "development";
 let baseURL = "http://localhost:8080/api/v1";
@@ -18,14 +19,12 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// use this to handle errors gracefully
-// api.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response.status === 500) {
-//       throw new Error(error.response.data)
-//     }
-//   }
-// )
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    toast.error(error.response.data.error.errorMessage);
+  }
+)
 
 export default api;
