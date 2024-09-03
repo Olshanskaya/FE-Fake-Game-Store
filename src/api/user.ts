@@ -1,5 +1,5 @@
 import { GlobalResponse } from "@/types";
-import { UpdateUserRole, User } from "@/types/user";
+import { UpdateUser, UpdateUserRole, User } from "@/types/user";
 import api from ".";
 import toast from "react-hot-toast";
 import { Game } from "@/types/game";
@@ -55,6 +55,17 @@ export const deleteGameInFav = async (id: string): Promise<GlobalResponse<void>>
   try {
     const res = await api.delete("users/me/games/favourites/" + id);
     if (res.data.status === "success") toast.success("Game deleted from your favorites");
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return Promise.reject(new Error("Something went wrong"));
+  }
+};
+
+export const updateUserInfo = async (data: UpdateUser): Promise<GlobalResponse<User>> => {
+  try {
+    const res = await api.patch("users/me", data);
+    if (res.data.status === "success") toast.success("User updated");
     return res.data;
   } catch (error) {
     console.error(error);

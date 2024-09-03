@@ -2,6 +2,7 @@ import { useAuth } from "@/auth/AuthProvider";
 import { Button } from "../ui/button";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EditGameDialog } from "./EditUserInfoDialog";
 
 export function UserInfo() {
   const { user } = useAuth();
@@ -41,7 +42,7 @@ export function UserInfo() {
         {user?.activeStatus === "UNVERIFIED" && (
           <p className="mt-4 font-medium text-[var(--destructive)]">Verify Your Email</p>
         )}
-        <Button className="w-full">Edit</Button>
+        <EditGameDialog></EditGameDialog>
       </CardContent>
     </Card>
   );

@@ -1,4 +1,4 @@
-import { logIn, signup, verifyEmail } from "@/api/auth";
+import { findLoggedUser, logIn, signup, verifyEmail } from "@/api/auth";
 import { CreateUser, User } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ type UserContextType = {
   isLoggedIn: () => boolean;
   signupUser: (data: CreateUser) => void;
   verifyUserEmail: (token: string) => void;
+  updateUserInfoInStorage: () => void;
 };
 
 type Props = { children: React.ReactNode };
@@ -87,9 +88,26 @@ export const AuthProvider = ({ children }: Props) => {
     navigate("/");
   };
 
+  const updateUserInfoInStorage = async () => {
+    await findLoggedUser().then((res) => {
+      localStorage.setItem("user", JSON.stringify(res.data));
+      setUser(res.data);
+    });
+    console.log("updateUserInfoInStorage");
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, token, logInUser, logOut, isLoggedIn, signupUser, verifyUserEmail }}
+      value={{
+        user,
+        token,
+        logInUser,
+        logOut,
+        isLoggedIn,
+        signupUser,
+        verifyUserEmail,
+        updateUserInfoInStorage
+      }}
     >
       {isReady ? children : null}
     </UserContext.Provider>
