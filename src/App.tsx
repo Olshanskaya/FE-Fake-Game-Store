@@ -9,6 +9,8 @@ import LayoutWithHeader from "./components/LayoutWithHeader";
 import { AuthProvider } from "./auth/AuthProvider";
 import { MyAccount } from "./pages/MyAccount";
 import { VerifyEmail } from "./pages/VerifyEmail";
+import { ForgotPassword } from "./pages/ForgotPassword";
+import { ResetPassword } from "./pages/ReserParrwors";
 
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
           <Route path="/auth/verify/:token" element={<VerifyEmail />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </AuthProvider>
     </>

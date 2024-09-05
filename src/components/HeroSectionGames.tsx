@@ -1,8 +1,7 @@
-import { getAllActiveGames } from "@/api/games";
+import { getAllActiveGames, getHeroesGames } from "@/api/games";
 import { addGameToCart } from "@/api/order";
 import { addGameToFav } from "@/api/user";
 import { Can } from "@/components/Can";
-import { HeroSectionGames } from "@/components/HeroSectionGames";
 import PaginationControls from "@/components/PaginationControls";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,20 +14,18 @@ import {
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { LuHeart } from "react-icons/lu";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export function Home() {
+export function HeroSectionGames() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
   const handleAddGameToCart = (id: string, event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     addGameToCart(id);
   };
 
   const { data: games, isLoading } = useQuery({
-    queryKey: ["games", searchParams.toString()],
-    queryFn: () => getAllActiveGames(searchParams)
+    queryKey: ["heroesGames"],
+    queryFn: getHeroesGames
   });
 
   const handleNavigation = (id: string) => {
@@ -40,14 +37,15 @@ export function Home() {
     addGameToFav(id);
   };
 
+  if (isLoading) return <p>Loading...</p>;
+
   return (
-    <div className="p-10">
-      <div className="max-w-7xl mx-auto">
-        <HeroSectionGames></HeroSectionGames>
-      </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 p-8">
-        {isLoading && <p>Loading...</p>}
-        {games?.data?.allGamesList.map((game) => (
+    <div className="bg-gradient p-5">
+      <h1 className="text-center font-bold text-4xl text-gray-300" >
+        BEST GAMES
+      </h1>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 p-10">
+        {games?.data?.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
             <CardHeader className="flex flex-col text-center">
               <button onClick={(event) => handleAddGameToFavorite(game.id, event)}>
@@ -80,17 +78,6 @@ export function Home() {
             </CardFooter>
           </Card>
         ))}
-      </div>
-      <div className="grid justify-center p-10">
-        {games?.data?.allGamesHead && (
-          <PaginationControls
-            hasNextPage={
-              games.data.allGamesHead.currentPageNumber < games.data.allGamesHead.totalPages
-            }
-            hasPrevPage={games.data.allGamesHead.currentPageNumber > 1}
-            allGamesHead={games.data.allGamesHead}
-          />
-        )}
       </div>
     </div>
   );

@@ -8,44 +8,46 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/auth/AuthProvider";
+import { useNavigate, useParams } from "react-router-dom";
+import { resetUserPassword } from "@/api/auth";
 
-const formSchema = z.object({
-  email: z.string().email({ message: "Enter correct email" }).min(2).max(50),
-  password: z.string().min(2).max(50)
-});
+const formSchema = z
+  .object({
+    confirmPassword: z.string().min(2).max(50),
+    password: z.string().min(2).max(50)
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords must match"
+  });
 
-export function Login() {
+export function ResetPassword() {
+  const { token } = useParams();
   const navigate = useNavigate();
-  const { user, logInUser } = useAuth();
+
+  if (!token) return <p>Invalid token</p>;
 
   const handleNavigationHome = () => {
     navigate(`/`);
   };
 
-  const handleNavigationForgotPassword = () => {
-    navigate(`/forgot-password`);
-  };
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     }
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    logInUser(values.email, values.password);
-    console.log(user);
+    resetUserPassword({ password: values.password, confirmPassword: values.confirmPassword }, token ?? "");
+    handleNavigationHome();
   }
 
   return (
@@ -55,23 +57,10 @@ export function Login() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="email..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>password</FormLabel>
                   <FormControl>
                     <Input placeholder="password..." {...field} />
                   </FormControl>
@@ -79,18 +68,21 @@ export function Login() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>confirmPassword</FormLabel>
+                  <FormControl>
+                    <Input placeholder="confirmPassword..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit" className="w-full rounded py-2">
               Submit
-            </Button>
-            <Button type="button" onClick={handleNavigationHome} className="w-full rounded py-2">
-              Cancel
-            </Button>
-            <Button
-              type="button"
-              onClick={handleNavigationForgotPassword}
-              className="w-full rounded py-2"
-            >
-              Forgot password
             </Button>
           </form>
         </Form>
