@@ -2,10 +2,14 @@ import { verifyEmail } from "@/api/auth";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { Loading } from "./Loading";
+import toast from "react-hot-toast";
+import { useAuth } from "@/auth/AuthProvider";
 
 export function VerifyEmail() {
   const { token } = useParams();
   const navigate = useNavigate();
+  const { logOut } = useAuth();
 
   if (!token) return <p>Invalid token</p>;
 
@@ -14,9 +18,11 @@ export function VerifyEmail() {
     queryFn: () => verifyEmail(token)
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading></Loading>;
 
   const handleNavigationHome = () => {
+    toast.success("Email confirmed. Now Login to continue");
+    logOut();
     navigate(`/`);
   };
 
