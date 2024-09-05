@@ -42,7 +42,7 @@ export function HeroSectionGames() {
       <h1 className="text-center font-bold text-4xl text-gray-300" >
         BEST GAMES
       </h1>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-10 p-10">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 p-10">
         {games?.data?.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
             <CardHeader className="flex flex-col text-center">
