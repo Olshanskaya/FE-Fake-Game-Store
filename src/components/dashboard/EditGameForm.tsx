@@ -204,7 +204,7 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
             <FormItem>
               <FormLabel>price</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="price" {...field} />
+                <Input placeholder="price" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
