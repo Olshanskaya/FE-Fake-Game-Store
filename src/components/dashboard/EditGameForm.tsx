@@ -74,7 +74,7 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
       developer: props.developer,
       systemRequirements: props.systemRequirements,
       description: props.description,
-      price: props.price.toString(),
+      price: parseFloat(props.price.toString()),
       genreList: props.genreList,
       playerSupport: props.playerSupport,
       thumbnail: props.thumbnail,
