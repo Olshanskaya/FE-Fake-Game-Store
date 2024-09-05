@@ -75,7 +75,7 @@ export function Home() {
                     Add To Cart
                   </Button>
                 )}
-                no={() => <p>Sign in to access your shopping cart</p>}
+                no={() => <p className="w-full flex justify-center items-center text-center">Sign in to access your shopping cart</p>}
               />
             </CardFooter>
           </Card>

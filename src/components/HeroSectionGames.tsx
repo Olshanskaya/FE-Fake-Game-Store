@@ -1,16 +1,15 @@
-import { getAllActiveGames, getHeroesGames } from "@/api/games";
+import { getHeroesGames } from "@/api/games";
 import { addGameToCart } from "@/api/order";
 import { addGameToFav } from "@/api/user";
 import { Can } from "@/components/Can";
-import PaginationControls from "@/components/PaginationControls";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { LuHeart } from "react-icons/lu";
@@ -73,7 +72,7 @@ export function HeroSectionGames() {
                     Add To Cart
                   </Button>
                 )}
-                no={() => <p>Sign in to access your shopping cart</p>}
+                no={() => <p className="w-full flex justify-center items-center text-center">Sign in to access your shopping cart</p>}
               />
             </CardFooter>
           </Card>
