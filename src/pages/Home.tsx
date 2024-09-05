@@ -54,7 +54,7 @@ export function Home() {
       <div className="max-w-7xl mx-auto">
         <HeroSectionGames></HeroSectionGames>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-10 p-8">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 p-8">
         {isLoading && <p>Loading...</p>}
         {games?.data?.allGamesList.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
