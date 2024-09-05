@@ -96,7 +96,7 @@ export function Register() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password..." {...field} />
+                    <Input type="password" placeholder="password..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -109,7 +109,7 @@ export function Register() {
                 <FormItem>
                   <FormLabel>confirmPassword</FormLabel>
                   <FormControl>
-                    <Input placeholder="confirmPassword..." {...field} />
+                    <Input type="password" placeholder="confirmPassword..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
