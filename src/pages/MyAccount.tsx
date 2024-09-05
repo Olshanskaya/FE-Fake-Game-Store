@@ -6,12 +6,13 @@ import { UserInfo } from "@/components/myAccount/UserInfo";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { useState } from "react";
+import { Loading } from "./Loading";
 
 export function MyAccount() {
   const { user } = useAuth();
   const [option, setOption] = useState("favourites");
 
-  if (!user) return <div>Not logged in</div>;
+  if (!user) return <Loading></Loading>;
 
   return (
     <ResizablePanelGroup direction="horizontal" className="p-6">
