@@ -23,6 +23,7 @@ export const updateUserRole = async ({
 }): Promise<GlobalResponse<User>> => {
   try {
     const res = await api.patch("users/role/" + id, data);
+    if (res.data.status === "success") toast.success("User role updated");
     return res.data;
   } catch (error) {
     console.error(error);

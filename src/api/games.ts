@@ -8,6 +8,7 @@ import {
   SingleGameWithReviews,
   UpdateGame
 } from "../types/game";
+import toast from "react-hot-toast";
 
 export const getAllGames = async (
   params?: URLSearchParams
@@ -50,6 +51,7 @@ export const getGameById = async (id: string): Promise<GlobalResponse<SingleGame
 export const createGame = async (game: CreateGame) => {
   try {
     const res = await api.post("/games", game);
+    if (res.data.status === "success") toast.success("Game created!");
     return res.data;
   } catch (error) {
     console.error(error);
@@ -60,6 +62,7 @@ export const createGame = async (game: CreateGame) => {
 export const updateGame = async (game: UpdateGame) => {
   try {
     const res = await api.patch("/games", game);
+    if (res.data.status === "success") toast.success("Game updated!");
     return res.data;
   } catch (error) {
     console.error(error);
@@ -70,6 +73,7 @@ export const updateGame = async (game: UpdateGame) => {
 export const addKeyToGame = async (id: string): Promise<GlobalResponse<KeyResponce>> => {
   try {
     const res = await api.post("/games/keys/" + id);
+    if (res.data.status === "success") toast.success("Key added to game!");
     return res.data;
   } catch (error) {
     console.error(error);
@@ -80,6 +84,7 @@ export const addKeyToGame = async (id: string): Promise<GlobalResponse<KeyRespon
 export const activateGame = async (id: string): Promise<GlobalResponse<KeyResponce>> => {
   try {
     const res = await api.patch("/games/activation/" + id);
+    if (res.data.status === "success") toast.success("Now users can buy this game!");
     return res.data;
   } catch (error) {
     console.error(error);
@@ -90,6 +95,7 @@ export const activateGame = async (id: string): Promise<GlobalResponse<KeyRespon
 export const deactivateGame = async (id: string): Promise<GlobalResponse<KeyResponce>> => {
   try {
     const res = await api.patch("/games/deactivation/" + id);
+    if (res.data.status === "success") toast.success("Now this game is not available for purchase!");
     return res.data;
   } catch (error) {
     console.error(error);

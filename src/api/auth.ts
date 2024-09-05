@@ -14,6 +14,7 @@ export const logIn = async (data: LoginUserUser): Promise<GlobalResponse<LoggedI
   try {
     console.log("data", data);
     const res = await api.post("auth/login", data);
+    if (res.data.status === "success") toast.success("Welcome!");
     return res.data;
   } catch (error) {
     console.error(error);
@@ -25,6 +26,7 @@ export const signup = async (data: CreateUser): Promise<GlobalResponse<LoggedInU
   try {
     console.log("data", data);
     const res = await api.post("auth/signup", data);
+    if (res.data.status === "success") toast.success("Check your email for verification link");
     return res.data;
   } catch (error) {
     console.error(error);
@@ -35,6 +37,7 @@ export const signup = async (data: CreateUser): Promise<GlobalResponse<LoggedInU
 export const verifyEmail = async (token: string): Promise<GlobalResponse<LoggedInUser>> => {
   try {
     const res = await api.post("auth/verify/" + token);
+    if (res.data.status === "success") toast.success("Your Email has been verified");
     return res.data;
   } catch (error) {
     console.error(error);
