@@ -22,7 +22,7 @@ export function HeroSectionGames() {
     addGameToCart(id);
   };
 
-  const { data: games, isLoading } = useQuery({
+  const { data: games} = useQuery({
     queryKey: ["heroesGames"],
     queryFn: getHeroesGames
   });
@@ -36,14 +36,13 @@ export function HeroSectionGames() {
     addGameToFav(id);
   };
 
-  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div className="bg-gradient p-5">
       <h1 className="text-center font-bold text-4xl text-gray-300" >
         BEST GAMES
       </h1>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 p-10">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-10 p-10">
         {games?.data?.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
             <CardHeader className="flex flex-col text-center">

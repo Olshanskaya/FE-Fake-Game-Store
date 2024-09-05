@@ -16,6 +16,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { LuHeart } from "react-icons/lu";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Loading } from "./Loading";
 
 export function Home() {
   const navigate = useNavigate();
@@ -40,12 +41,20 @@ export function Home() {
     addGameToFav(id);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading />
+      </div>
+    );
+  }
+  
   return (
     <div className="p-10">
       <div className="max-w-7xl mx-auto">
         <HeroSectionGames></HeroSectionGames>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 p-8">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-10 p-8">
         {isLoading && <p>Loading...</p>}
         {games?.data?.allGamesList.map((game) => (
           <Card key={game.id} onClick={() => handleNavigation(game.id)}>
