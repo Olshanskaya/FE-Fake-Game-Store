@@ -39,11 +39,11 @@ const formSchema = z.object({
   releaseDate: z.date(),
   price: z
     .string()
-    .min(1, "Price cannot be empty")
+    .min(1)
     .transform((value) => value.replace(",", "."))
-    .refine((value) => !isNaN(parseFloat(value)), "Price must be a valid number")
+    .refine((value) => !isNaN(parseFloat(value)))
     .transform((value) => parseFloat(value))
-    .refine((value) => value >= 0, "Price cannot be negative")
+    .refine((value) => value >= 0)
 });
 
 interface EditGameFormProps extends Game {
@@ -74,7 +74,7 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
       developer: props.developer,
       systemRequirements: props.systemRequirements,
       description: props.description,
-      price: parseFloat(props.price.toString()),
+      price: props.price,
       genreList: props.genreList,
       playerSupport: props.playerSupport,
       thumbnail: props.thumbnail,
@@ -83,6 +83,7 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
     }
   });
 
+
   const { fields, append, remove } = useFieldArray<Game>({
     control: form.control,
     name: "images" as never
@@ -90,7 +91,8 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    if (props.id === "") {
+    const isNewGame = !props.id;
+    if (isNewGame) {
       console.log("create new game");
       const newGame: CreateGame = {
         ...values
@@ -103,7 +105,7 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
         ...values,
         id: props.id
       } as UpdateGame;
-      console.log(newGame);
+      console.log(values);
       mutation2.mutate(newGame);
     }
     handleSubmit();
@@ -204,7 +206,7 @@ export function EditGameForm({ onSubmit: handleSubmit, ...props }: EditGameFormP
             <FormItem>
               <FormLabel>price</FormLabel>
               <FormControl>
-                <Input placeholder="price" {...field} />
+                <Input placeholder="price" {...field} {...form.register("price", { setValueAs: (value)=> value.toString()})} />
               </FormControl>
               <FormMessage />
             </FormItem>
