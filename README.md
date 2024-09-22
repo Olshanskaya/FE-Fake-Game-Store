@@ -1,45 +1,83 @@
-# Frontend for an E-commerce Website
 
-The current template tech stack: React, TypeScript, Tailwind, Shadcn, tanstack/react-query.
+# Fake Game Store App - Frontend 
 
-### General requirements
+This project was created as an assignment at the [Integrify Academy](https://www.integrify.io/). 
 
-**Pages to Create:**
+Backend is created by me in 3 weeks.
 
-1. Home page (list all the products)
-2. Product page (contain the details of a product)
-3. Dashboard page
+## Description
 
-**Functionalities for a Visitor:**
+This is a `Frontend part` of `Full-Stack project`. 
+The project is a `Fake Game Store App` where users can browse games, add them to the cart, and make a purchase (game keys).
 
-- Get list of products
-- Filter products by categories or price
-- Search products by name
-- Add products to a cart
-- Remove products from a cart
-- Do a checkout
+Backend part of the project is [here](https://github.com/Olshanskaya/BE-Fake-Game-Store).
 
-**Functionalities for an Admin:**
+### Deployment
 
-- CRUD operation for:
-  - products
-  - users
-  - orders
-  - categories (if exists)
+The project is deployed on Vercel. Link: https://fs18-java-frontend-olive.vercel.app/ 
 
-### Additional requirements
+(As soon as I use a free server for the backend, it takes 3-5 minutes to wake it up after first request)
 
-**Authentication:**
 
-- Implement register and login functionality via email and password
-- Protect the routes based on login and user role
+## About the Project
 
-**Form Validation:**
+### Users Perspective
 
-- Implement form validation.
+This website is a place where users can explore and buy games easily. 
+Users can `browse` a list of games and `search` by genre, player support, or part of the game’s name.
+Each game has a detailed page with more information.
 
-### Bonus Requirement
+New users can `create an account` using their email. 
+After `signing up`, they must `confirm email` by clicking a link sent to their inbox.
+If a user forgets their password, they can always `reset password` by following the instructions sent to their email.
 
-- Messages, show loading, success, and error messages (e.g., when loading products list or adding new product)
-- Implement pagination feature
-- Create a Profile Page (only available if user logs in), implement editing user profile feature (user can change first name, last name)
+Once registered, users can `edit personal information`. 
+Users can `add games to their cart` and `buy game keys`, which will be `sent to their email`. 
+They can also `view order history`.
+Additionally, users can add games to their `favorites` and remove them at any time. 
+They can leave a `review` with a rating (1 to 5) and an `optional text comment`. 
+The overall game `rating` of each game is `calculated on user reviews`.
+
+### Admin Perspective
+
+Administrators have special permissions.
+They can `add`, `edit`, and `delete games`. 
+Administrators can also add new `game keys` that users purchase.
+Furthermore, they can `assign new administrators` from registered users.
+
+
+
+## Technologies Used
+
+### Backend
+
+- Java 21
+- Spring Boot
+- Spring Security
+- Spring Data JPA
+- Hibernate
+- PostgreSQL
+- Lombok
+- Maven
+- Modelmapper
+- JavaMail
+- Thymeleaf-spring
+
+
+### Frontend
+
+- TypeScript
+- React
+- React Router
+- React Hook Form
+- Axios
+- Tanstack Query
+- Tailwind CSS
+- Shadcn/ui
+- Zod
+
+## UX/UI
+
+![alt text](image.png)
+
+
