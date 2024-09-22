@@ -81,6 +81,12 @@ Furthermore, they can `assign new administrators` from registered users.
 ![Main Page](image.png)
 *Main Page*
 
+![alt text](image-7.png)
+*Game Info Page*
+
+![alt text](image-8.png)
+*Game Reviews*
+
 <img src="image-1.png" alt="Sign Up Form" width="33%" />  
 
 *SignUp Form*
@@ -99,3 +105,18 @@ Furthermore, they can `assign new administrators` from registered users.
 <img src="image-5.png" alt="Log in Form" width="33%" />  
 
 *Edit User Info Form*
+
+![alt text](image-6.png)
+*Cart*
+
+![alt text](image-9.png)
+*Admin Dashboard: Users*
+
+![alt text](image-10.png)
+*Admin Dashboard: Games*
+
+![alt text](image-11.png)
+*Admin Dashboard: Edit Game*
+
+![alt text](image-12.png)
+*Admin Dashboard: Add Game*
