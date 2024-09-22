@@ -79,6 +79,8 @@ Furthermore, they can `assign new administrators` from registered users.
 ## UX/UI
 
 ![Main Page](image.png)
+*Main Page*
 
-![Sign Up Form](image-1.png)
+![Sign Up Form](image-1.png =33%)  
+*Sign Up Form*
 
