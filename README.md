@@ -120,3 +120,12 @@ Furthermore, they can `assign new administrators` from registered users.
 
 ![alt text](image-12.png)
 *Admin Dashboard: Add Game*
+
+![alt text](image-13.png)
+*Email: Game Keys*
+
+![alt text](image-14.png)
+*Email: Welcome message*
+
+![alt text](image-15.png)
+*Email: Forget password*
