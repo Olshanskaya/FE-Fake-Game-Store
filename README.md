@@ -3,7 +3,7 @@
 
 This project was created as an assignment at the [Integrify Academy](https://www.integrify.io/). 
 
-Backend is created by me in 3 weeks.
+Frontend is created by me in 3 weeks.
 
 ## Description
 
@@ -78,6 +78,7 @@ Furthermore, they can `assign new administrators` from registered users.
 
 ## UX/UI
 
-![alt text](image.png)
+![Main Page](image.png)
 
+![Sign Up Form](image-1.png)
 
