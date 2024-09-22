@@ -82,5 +82,6 @@ Furthermore, they can `assign new administrators` from registered users.
 *Main Page*
 
 <img src="image-1.png" alt="Sign Up Form" width="33%" />  
+
 *Sign Up Form*
 
