@@ -83,5 +83,19 @@ Furthermore, they can `assign new administrators` from registered users.
 
 <img src="image-1.png" alt="Sign Up Form" width="33%" />  
 
-*Sign Up Form*
+*SignUp Form*
 
+<img src="image-2.png" alt="Log in Form" width="33%" />  
+
+*LogIn Form*
+
+![alt text](image-3.png)
+*User Favourites*
+
+<img src="image-4.png" alt="Log in Form" width="33%" />  
+
+*User Info*
+
+<img src="image-5.png" alt="Log in Form" width="33%" />  
+
+*Edit User Info Form*
